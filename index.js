@@ -92,26 +92,22 @@ class Airplane {
       this.tank += fuel;
     } 
     drive(distance){
-      this.odometer += distance;
-      this.tank = this.tank - (distance / this.milesPerGallon); 
-      if(this.tank < this.milesPerGallon){
+      const drivable = this.tank * this.milesPerGallon;
+      if(distance <= drivable){
+        this.tank -= distance / this.milesPerGallon;
+        this.odometer += distance;
+      }else {
+        this.odometer += drivable;
         this.tank = 0;
-        
-      }
-      if(this.tank = 0){
         return `I ran out of fuel at ${this.odometer} miles!`;
       }
-      
     }
   }
   const carOne = new Car({
     model: 'Batmobile',
     milesPerGallon: 30
   });
-  carOne.fill(3);
-  // carOne.drive(40)
-  console.log(carOne);
-  console.log(carOne.drive(10));
+  
 
   /*
     TASK 3

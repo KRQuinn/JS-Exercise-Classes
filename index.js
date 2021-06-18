@@ -88,15 +88,31 @@ class Airplane {
       this.tank = 0;
       this.odometer = 0;
     }
-    fill(gas){
-      this.tank += gas;
+    fill(fuel){
+      this.tank += fuel;
     } 
     drive(distance){
       this.odometer += distance;
-      this.tank = distance / this.milesPerGallon; 
+      this.tank = this.tank - (distance / this.milesPerGallon); 
+      if(this.tank < this.milesPerGallon){
+        this.tank = 0;
+        
+      }
+      if(this.tank = 0){
+        return `I ran out of fuel at ${this.odometer} miles!`;
+      }
+      
     }
   }
-  
+  const carOne = new Car({
+    model: 'Batmobile',
+    milesPerGallon: 30
+  });
+  carOne.fill(3);
+  // carOne.drive(40)
+  console.log(carOne);
+  console.log(carOne.drive(10));
+
   /*
     TASK 3
       - Write a Lambdasian class.
@@ -110,9 +126,21 @@ class Airplane {
           + {name} and {location} of course come from the instance's own properties.
   */
  class Lambdasian {
-    
+    constructor(object){
+      this.name = object.name;
+      this.age = object.age;
+      this.location = object.location;
+    }
+    speak(){
+      return `Hello my name is ${this.name}, I am from ${this.location}`;
+    }
   }
   
+  const newStudent = new Lambdasian({
+    name: 'Ryan',
+    age: 34,
+    location: 'Portland, OR'
+  })
   /*
     TASK 4
       - Write an Instructor class extending Lambdasian.
@@ -127,8 +155,19 @@ class Airplane {
           + `demo` receives a `subject` string as an argument and returns the phrase 'Today we are learning about {subject}' where subject is the param passed in.
           + `grade` receives a `student` object and a `subject` string as arguments and returns '{student.name} receives a perfect score on {subject}'
   */
- class Instructor {
-
+ class Instructor extends Lambdasian {
+  constructor(object){
+    super(object);
+    this.specialty = object.specialty;
+    this.favLanguage = object.favLanguage;
+    this.catchPhrase = object.catchPhrase;
+  }
+  demo(subject){
+    return `Today we are learning about ${subject}`;
+  }
+  grade(student, subject){
+    return `${student.name} receives a perfect score on ${subject}`;
+  }
  }
   /*
     TASK 5
